@@ -4,16 +4,18 @@ import camp.nextstep.edu.missionutils.Console
 fun main() {
     val inputView = InputView()
     val outputView = OutputView()
+    val discount = DdayDiscount()
     val event = Event()
 
     try {
         val date = inputView.readDate()
         val order = inputView.readOrder()
-
         val badge = event.applyEvent(order)
 
-        outputView.printMenu(order)
-        // TODO: 출력 로직을 구현
+        val totalDiscount = discount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
+        val finalAmount = order.totalAmount - totalDiscount
+
+        outputView.printOrderSummary(order, discount, finalAmount)
         outputView.printBadge(badge)
 
     } catch (e: IllegalArgumentException) {
