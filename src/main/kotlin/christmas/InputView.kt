@@ -6,6 +6,7 @@ import java.util.Locale
 
 class InputView {
     fun readDate(): Int {
+        println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.")
         println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)")
         val input = Console.readLine()
         // 입력값을 숫자로 변환하고, 변환할 수 없는 경우 예외를 발생시킵니다.
