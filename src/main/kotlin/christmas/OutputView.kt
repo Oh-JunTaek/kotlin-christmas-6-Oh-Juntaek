@@ -6,9 +6,9 @@ class OutputView {
     fun printOrderSummary(order: Order, discount: DdayDiscount, finalAmount: Int) {
         val discountDetails = mutableListOf<String>()
         val formatter = NumberFormat.getNumberInstance()
-        val ddayDiscount = discount.calculateDdayDiscount(order.date)
-        val weekdayDiscount = discount.calculateWeekdayDiscount(order.date, order.dessertCount)
-        val weekendDiscount = discount.calculateWeekendDiscount(order.date, order.mainCount)
+        val ddayDiscount = discount.calculateDdayDiscount(order.date.dayOfMonth)
+        val weekdayDiscount = discount.calculateWeekdayDiscount(order.date.dayOfMonth, order.dessertCount)
+        val weekendDiscount = discount.calculateWeekendDiscount(order.date.dayOfMonth, order.mainCount)
         val specialDiscount = discount.calculateSpecialDiscount(order.isSpecialDay)
         val giftDiscount = discount.calculateGiftEvent(order.totalAmount)
 
