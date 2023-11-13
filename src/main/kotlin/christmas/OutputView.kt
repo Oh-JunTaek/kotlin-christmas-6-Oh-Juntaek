@@ -38,27 +38,27 @@ class OutputView {
             }
         }
 
-            println("12월 ${order.date.dayOfMonth}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!")
-            println("<주문 메뉴>")
-            order.items.forEach {
-                println("${it.menu.name} ${it.quantity}개")
-            }
-            println("\n<할인 전 총주문 금액>")
-            println("${formatter.format(order.totalAmount)}원")
+        println("12월 ${order.date.dayOfMonth}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!")
+        println("<주문 메뉴>")
+        order.items.forEach {
+            println("${it.menu.name} ${it.quantity}개")
+        }
+        println("\n<할인 전 총주문 금액>")
+        println("${formatter.format(order.totalAmount)}원")
 
-            println("\n<증정 메뉴>")
-            if (order.totalAmount >= 120000) {
-                println("샴페인 1개")
-            } else {
-                println("없음")
-            }
+        println("\n<증정 메뉴>")
+        if (order.totalAmount >= 120000) {
+            println("샴페인 1개")
+        } else {
+            println("없음")
+        }
 
-            println("\n<혜택 내역>")
-            if (discountDetails.isEmpty()) {
-                println("없음")
-            } else {
-                discountDetails.forEach { println(it) }
-            }
+        println("\n<혜택 내역>")
+        if (discountDetails.isEmpty()) {
+            println("없음")
+        } else {
+            discountDetails.forEach { println(it) }
+        }
 
         println("\n<총혜택 금액>")
         val totalDiscount = ddayDiscount + weekdayDiscount + weekendDiscount + specialDayDiscount + giftDiscount
