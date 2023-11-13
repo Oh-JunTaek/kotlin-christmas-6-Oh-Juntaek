@@ -17,7 +17,9 @@ class Event {
 
     fun applyEvent(order: Order): String {
         validateOrder(order)
-        val totalDiscount = calculateTotalDiscount(order)
+        val ddayDiscount = DdayDiscount()
+        val totalDiscount = ddayDiscount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
+        val finalAmount = ddayDiscount.calculateFinalAmount(order.totalAmount, totalDiscount)
         return assignBadge(totalDiscount)
     }
 
@@ -34,6 +36,17 @@ class Event {
         }
     }
     //주문 예외상황설정
+
+    private fun assignBadge(totalDiscount: Int): String {
+        var badge = "없음"
+        for ((key, value) in BADGE_THRESHOLDS) {
+            if (totalDiscount >= value) {
+                badge = key
+            }
+        }
+        return badge
+    }
+}
 
     private fun calculateTotalDiscount(order: Order): Int {
         //할인 계산식 추가 예정
