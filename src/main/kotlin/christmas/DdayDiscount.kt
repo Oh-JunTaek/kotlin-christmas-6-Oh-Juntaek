@@ -14,6 +14,7 @@ class DdayDiscount {
             val START_DATE = LocalDate.of(2023, 12, 1)
             val END_DATE = LocalDate.of(2023, 12, 25)
             val WEEKENDS = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30) }
+            val specialDays = listOf(3, 10, 17, 24, 25, 31)
             val CHAMPAGNE_PRICE = MenuList.ALL_MENUS["샴페인"]?.price ?: 0
 //각종 상수 선언
 
@@ -59,10 +60,13 @@ class DdayDiscount {
     fun calculateGiftEvent(totalAmount: Int): Int {
         return if (totalAmount >= GIFT_THRESHOLD) CHAMPAGNE_PRICE else 0
     }
+    fun calculateSpecialDayDiscount(day: Int): Int {
+        return if (specialDays.contains(day)) SPECIAL_DISCOUNT else 0
+    }
 
-        private fun validateDate(date: LocalDate) {
-            if (date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
-                throw IllegalArgumentException("날짜는 ${START_DATE.year}년 ${START_DATE.monthValue}월 ${START_DATE.dayOfMonth}일부터 ${END_DATE.year}년 ${END_DATE.monthValue}월 ${END_DATE.dayOfMonth}일까지만 가능합니다.")
-            }
+    private fun validateDate(date: LocalDate) {
+        if (date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
+             throw IllegalArgumentException("날짜는 ${START_DATE.year}년 ${START_DATE.monthValue}월 ${START_DATE.dayOfMonth}일부터 ${END_DATE.year}년 ${END_DATE.monthValue}월 ${END_DATE.dayOfMonth}일까지만 가능합니다.")
         }
     }
+}
