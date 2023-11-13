@@ -26,4 +26,8 @@ class OutputView {
         val event = Event()
         println(event.applyEvent(order))
     }
+    fun printBadge(badge: String) {
+        println("\n<12월 이벤트 배지>")
+        println(badge)
+    }
 }
