@@ -11,4 +11,12 @@ class Event {
         )
     }
     // 상수 선언
+
+    fun applyEvent(order: Order): String {
+        validateOrder(order)
+        val totalDiscount = calculateTotalDiscount(order)
+        return assignBadge(totalDiscount)
+    }
+
+
 }
