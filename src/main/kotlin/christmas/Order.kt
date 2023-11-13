@@ -13,44 +13,65 @@ data class Order(
     val items: List<OrderItem>
 ){
     companion object {
-         fun parseOrder(input: String, date: LocalDate): Order {
-             val orderItems = input.split(",").map { it.trim() } // 각 메뉴와 개수를 구분합니다.
-             val orders = orderItems.map { parseOrderItem(it) } // 각 메뉴와 개수를 OrderItem 객체로 변환합니다.
-             val uniqueMenuCount = orders.map { it.menu.name }.distinct().count()
-             if (uniqueMenuCount != orders.size) {
-                 throw IllegalArgumentException("중복된 메뉴가 있습니다.")
-             }
-             val totalAmount = orders.sumBy { it.menu.price * it.quantity }
-             val totalCount = orders.sumBy { it.quantity }
-             val beverageCount = orders.count { it.menu.category == MenuCategory.BEVERAGE }
-             val dessertCount = orders.count { it.menu.category == MenuCategory.DESSERT }
-             val mainCount = orders.count { it.menu.category == MenuCategory.MAIN }
-             val isSpecialDay = false
-             return Order(
-                 date,
-                 totalAmount,
-                 totalCount,
-                 beverageCount,
-                 dessertCount,
-                 mainCount,
-                 isSpecialDay,
-                 orders
-             )
-         }
+        fun parseOrder(input: String, date: LocalDate): Order {
+            val orderItems = input.split(",").map { it.trim() }
+            val orders = orderItems.map { parseOrderItem(it) }
+            validateUniqueMenu(orders)
+            return createOrder(date, orders)
+        }
 
-             private fun parseOrderItem(orderItem: String): OrderItem {
-                 if (!orderItem.contains("-")) {
-                     throw IllegalArgumentException("[ERROR] 메뉴와 개수는 '-'로 구분하여 입력해 주세요.")
-                 }
-                 val (menuName, quantityStr) = orderItem.split("-") // 메뉴 이름과 개수를 구분합니다.
-                 val menu = MenuList.ALL_MENUS[menuName.trim()] // 메뉴 리스트에서 해당 메뉴를 찾습니다.
-                     ?: throw IllegalArgumentException("메뉴 이름이 올바르지 않습니다.")
-                 val quantity = quantityStr.trim().toIntOrNull()
-                 if (quantity == null || quantity < 1) {
-                     throw IllegalArgumentException("개수는 1 이상의 숫자만 입력해 주세요.")
-                 }
-                 return OrderItem(menu, quantity)
-             }
+        private fun parseOrderItem(orderItem: String): OrderItem {
+            validateOrderItemFormat(orderItem)
+            val (menuName, quantityStr) = orderItem.split("-")
+            val menu = findMenu(menuName.trim())
+            val quantity = validateQuantity(quantityStr.trim())
+            return OrderItem(menu, quantity)
+        }
+
+        private fun validateOrderItemFormat(orderItem: String) {
+            if (!orderItem.contains("-")) {
+                throw IllegalArgumentException("[ERROR] 메뉴와 개수는 '-'로 구분하여 입력해 주세요.")
+            }
+        }
+
+        private fun findMenu(menuName: String): Menu {
+            return MenuList.ALL_MENUS[menuName]
+                ?: throw IllegalArgumentException("메뉴 이름이 올바르지 않습니다.")
+        }
+
+        private fun validateQuantity(quantityStr: String): Int {
+            val quantity = quantityStr.toIntOrNull()
+            if (quantity == null || quantity < 1) {
+                throw IllegalArgumentException("개수는 1 이상의 숫자만 입력해 주세요.")
+            }
+            return quantity
+        }
+
+        private fun validateUniqueMenu(orders: List<OrderItem>) {
+            val uniqueMenuCount = orders.map { it.menu.name }.distinct().count()
+            if (uniqueMenuCount != orders.size) {
+                throw IllegalArgumentException("중복된 메뉴가 있습니다.")
+            }
+        }
+
+        private fun createOrder(date: LocalDate, orders: List<OrderItem>): Order {
+            val totalAmount = orders.sumBy { it.menu.price * it.quantity }
+            val totalCount = orders.sumBy { it.quantity }
+            val beverageCount = orders.count { it.menu.category == MenuCategory.BEVERAGE }
+            val dessertCount = orders.count { it.menu.category == MenuCategory.DESSERT }
+            val mainCount = orders.count { it.menu.category == MenuCategory.MAIN }
+            val isSpecialDay = false
+            return Order(
+                date,
+                totalAmount,
+                totalCount,
+                beverageCount,
+                dessertCount,
+                mainCount,
+                isSpecialDay,
+                orders
+            )
+        }
     }
 
     fun printOrder() {
