@@ -46,13 +46,3 @@ class Event {
         return badge
     }//할인 금액에 따른 배지 부여
 }
-
-data class Order(
-    val date: LocalDate,
-    val totalAmount: Int,
-    val totalCount: Int,
-    val beverageCount: Int,
-    val dessertCount: Int,
-    val mainCount: Int,
-    val isSpecialDay: Boolean
-)//주문 정보를 담은 데이터 클래스
