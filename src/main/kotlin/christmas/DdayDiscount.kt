@@ -30,10 +30,9 @@ class DdayDiscount {
 
         if (!WEEKENDS.contains(date.dayOfMonth)) {
             discount += dessertCount * WEEKDAY_DESSERT_DISCOUNT
-            return discount
+        } else {
+            discount += mainCount * WEEKEND_MAIN_DISCOUNT
         }
-
-        discount += mainCount * WEEKEND_MAIN_DISCOUNT
 
         if (isSpecialDay) {
             discount += SPECIAL_DISCOUNT
