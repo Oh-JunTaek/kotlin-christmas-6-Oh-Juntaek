@@ -38,7 +38,7 @@ class Event {
 
     private fun assignBadge(totalDiscount: Int): String {
         var badge = "없음"
-        for ((key, value) in BADGE_THRESHOLDS) {
+        for ((key, value) in BADGE_THRESHOLDS.toSortedMap(compareBy { BADGE_THRESHOLDS[it] })) {
             if (totalDiscount >= value) {
                 badge = key
             }
