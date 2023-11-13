@@ -15,8 +15,7 @@ class DdayDiscount {
             val END_DATE = LocalDate.of(2023, 12, 25)
             val WEEKENDS = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
         }
-
-        val CHAMPAGNE_PRICE = MenuList.BEVERAGES.find { it.name == "샴페인" }?.price ?: 0
+            val CHAMPAGNE_PRICE = MenuList.ALL_MENUS["샴페인"]?.price ?: 0
 //각종 상수 선언
 
         fun calculateDiscount(
