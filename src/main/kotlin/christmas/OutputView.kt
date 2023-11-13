@@ -5,27 +5,27 @@ import java.text.NumberFormat
 class OutputView {
     fun printOrderSummary(order: Order, discount: DdayDiscount, finalAmount: Int) {
         val discountDetails = mutableListOf<String>()
+        val formatter = NumberFormat.getNumberInstance()
         val ddayDiscount = discount.calculateDdayDiscount(order.date)
         val weekdayDiscount = discount.calculateWeekdayDiscount(order.date, order.dessertCount)
         val weekendDiscount = discount.calculateWeekendDiscount(order.date, order.mainCount)
         val specialDiscount = discount.calculateSpecialDiscount(order.isSpecialDay)
         val giftDiscount = discount.calculateGiftEvent(order.totalAmount)
-        val formatter = NumberFormat.getNumberInstance()
 
         if (ddayDiscount > 0) {
-            discountDetails.add("크리스마스 디데이 할인: -${ddayDiscount}원")
+            discountDetails.add("크리스마스 디데이 할인: -${formatter.format(ddayDiscount)}원")
         }
         if (weekdayDiscount > 0) {
-            discountDetails.add("평일 할인: -${weekdayDiscount}원")
+            discountDetails.add("평일 할인: -${formatter.format(weekdayDiscount)}원")
         }
         if (weekendDiscount > 0) {
-            discountDetails.add("주말 할인: -${weekendDiscount}원")
+            discountDetails.add("주말 할인: -${formatter.format(weekendDiscount)}원")
         }
         if (specialDiscount > 0) {
-            discountDetails.add("특별 할인: -${specialDiscount}원")
+            discountDetails.add("특별 할인: -${formatter.format(specialDiscount)}원")
         }
         if (giftDiscount > 0) {
-            discountDetails.add("증정 이벤트: -${giftDiscount}원")
+            discountDetails.add("증정 이벤트: -${formatter.format(giftDiscount)}원")
         }
 
         println("12월 ${order.date.dayOfMonth}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!")
