@@ -13,8 +13,7 @@ class DdayDiscount {
             const val GIFT_THRESHOLD = 120000
             val START_DATE = LocalDate.of(2023, 12, 1)
             val END_DATE = LocalDate.of(2023, 12, 25)
-            val WEEKENDS = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
-        }
+            val WEEKENDS = listOf(1, 2, 8, 9, 15, 16, 22, 23, 29, 30) }
             val CHAMPAGNE_PRICE = MenuList.ALL_MENUS["샴페인"]?.price ?: 0
 //각종 상수 선언
 
@@ -26,22 +25,11 @@ class DdayDiscount {
         mainCount: Int
     ): Int {
         validateDate(date)
-        var discount = START_DISCOUNT + (date.dayOfMonth - 1) * INCREASE_DISCOUNT
-
-        if (!WEEKENDS.contains(date.dayOfMonth)) {
-            discount += dessertCount * WEEKDAY_DESSERT_DISCOUNT
-        } else {
-            discount += mainCount * WEEKEND_MAIN_DISCOUNT
-        }
-
-        if (isSpecialDay) {
-            discount += SPECIAL_DISCOUNT
-        }
-
-        if (totalAmount >= GIFT_THRESHOLD) {
-            discount += CHAMPAGNE_PRICE
-        }
-
+        var discount = calculateDdayDiscount(date.dayOfMonth)
+        discount += calculateWeekdayDiscount(date.dayOfMonth, dessertCount)
+        discount += calculateWeekendDiscount(date.dayOfMonth, mainCount)
+        discount += calculateSpecialDiscount(isSpecialDay)
+        discount += calculateGiftEvent(totalAmount)
         return discount
     }
 
@@ -49,19 +37,16 @@ class DdayDiscount {
             return totalAmount - totalDiscount
         }
 
-    fun calculateDdayDiscount(date: LocalDate): Int {
-        validateDate(date)
-        return START_DISCOUNT + (date.dayOfMonth - 1) * INCREASE_DISCOUNT
+    fun calculateDdayDiscount(dayOfMonth: Int): Int {
+        return START_DISCOUNT + (dayOfMonth - 1) * INCREASE_DISCOUNT
     }
 
-    fun calculateWeekdayDiscount(date: LocalDate, dessertCount: Int): Int {
-        validateDate(date)
-        return if (!WEEKENDS.contains(date.dayOfMonth)) dessertCount * WEEKDAY_DESSERT_DISCOUNT else 0
+    fun calculateWeekdayDiscount(dayOfMonth: Int, dessertCount: Int): Int {
+        return if (!WEEKENDS.contains(dayOfMonth)) dessertCount * WEEKDAY_DESSERT_DISCOUNT else 0
     }
 
-    fun calculateWeekendDiscount(date: LocalDate, mainCount: Int): Int {
-        validateDate(date)
-        return if (WEEKENDS.contains(date.dayOfMonth)) mainCount * WEEKEND_MAIN_DISCOUNT else 0
+    fun calculateWeekendDiscount(dayOfMonth: Int, mainCount: Int): Int {
+        return if (WEEKENDS.contains(dayOfMonth)) mainCount * WEEKEND_MAIN_DISCOUNT else 0
     }
 
     fun calculateSpecialDiscount(isSpecialDay: Boolean): Int {
