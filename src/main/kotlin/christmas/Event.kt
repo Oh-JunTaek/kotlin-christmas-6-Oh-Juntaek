@@ -14,15 +14,15 @@ class Event {
     }//최소 주문 금액, 최대 메뉴 개수, 배지 부여 기준 상수 선언
 
     fun applyEvent(order: Order): String {
-        validateOrder(order) // 주문 검증
-        val totalDiscount = calculateTotalDiscount(order) // 총 할인 금액 계산
+        val totalDiscount = if (order.totalAmount >= MIN_ORDER_AMOUNT) {
+            calculateTotalDiscount(order) // 총 할인 금액 계산
+        } else {
+            0
+        }
         return assignBadge(totalDiscount) // 할인 금액에 따른 배지 부여
     }//이벤트 적용 메인 함수
 
     private fun validateOrder(order: Order) {
-        if (order.totalAmount < MIN_ORDER_AMOUNT) {
-            throw IllegalArgumentException("총주문 금액은 ${MIN_ORDER_AMOUNT}원 이상이어야 합니다.")
-        }
         if (order.totalCount > MAX_MENU_COUNT) {
             throw IllegalArgumentException("메뉴는 한 번에 최대 ${MAX_MENU_COUNT}개까지만 주문할 수 있습니다.")
         }
@@ -38,7 +38,8 @@ class Event {
 
     private fun assignBadge(totalDiscount: Int): String {
         var badge = "없음"
-        for ((key, value) in BADGE_THRESHOLDS.toSortedMap(compareBy { BADGE_THRESHOLDS[it] })) {
+        val sortedEntries = BADGE_THRESHOLDS.entries.sortedBy { it.value }
+        for ((key, value) in sortedEntries) {
             if (totalDiscount >= value) {
                 badge = key
             }

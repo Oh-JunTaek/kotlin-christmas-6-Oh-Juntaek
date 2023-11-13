@@ -25,6 +25,9 @@ class DdayDiscount {
         mainCount: Int
     ): Int {
         validateDate(date)
+        if (totalAmount < Event.MIN_ORDER_AMOUNT) {
+            return 0
+        }
         var discount = calculateDdayDiscount(date.dayOfMonth)
         discount += calculateWeekdayDiscount(date.dayOfMonth, dessertCount)
         discount += calculateWeekendDiscount(date.dayOfMonth, mainCount)
