@@ -3,7 +3,7 @@ package christmas
 import java.time.LocalDate
 
 class DdayDiscount {
-    class DdayDiscount {
+
         companion object {
             const val START_DISCOUNT = 1000
             const val INCREASE_DISCOUNT = 100
@@ -61,4 +61,3 @@ class DdayDiscount {
             }
         }
     }
-}
