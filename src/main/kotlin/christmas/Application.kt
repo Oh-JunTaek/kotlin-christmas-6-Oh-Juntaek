@@ -6,14 +6,13 @@ fun main() {
     val outputView = OutputView()
     val discount = DdayDiscount()
     val event = Event()
-    val order = inputView.readOrder()
-    order.printOrder()
 
     try {
         val date = inputView.readDate()
         val order = inputView.readOrder()
-        val badge = event.applyEvent(order)
+        order.printOrder()
 
+        val badge = event.applyEvent(order)
         val totalDiscount = discount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
         val finalAmount = order.totalAmount - totalDiscount
 
