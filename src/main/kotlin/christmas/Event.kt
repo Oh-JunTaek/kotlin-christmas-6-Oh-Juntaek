@@ -33,4 +33,10 @@ class Event {
         }
     }
     //주문
+
+    private fun calculateTotalDiscount(order: Order): Int {
+        //할인 계산식 추가 예정
+        return 0
+    }
+
 }
