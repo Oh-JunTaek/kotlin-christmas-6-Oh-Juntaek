@@ -58,8 +58,8 @@ data class Order(
             val totalAmount = orders.sumBy { it.menu.price * it.quantity }
             val totalCount = orders.sumBy { it.quantity }
             val beverageCount = orders.count { it.menu.category == MenuCategory.BEVERAGE }
-            val dessertCount = orders.count { it.menu.category == MenuCategory.DESSERT }
-            val mainCount = orders.count { it.menu.category == MenuCategory.MAIN }
+            val dessertCount = orders.filter { it.menu.category == MenuCategory.DESSERT }.sumBy { it.quantity }
+            val mainCount = orders.filter { it.menu.category == MenuCategory.MAIN }.sumBy { it.quantity }
             val isSpecialDay = false
             return Order(
                 date,

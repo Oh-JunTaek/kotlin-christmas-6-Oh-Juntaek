@@ -33,7 +33,9 @@ class Event {
 
     private fun calculateTotalDiscount(order: Order): Int {
         val ddayDiscount = DdayDiscount()
-        return ddayDiscount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
+        var totalDiscount = ddayDiscount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
+        totalDiscount += ddayDiscount.calculateGiftEvent(order.totalAmount)
+        return totalDiscount
     }//할인 금액 계산
 
     private fun assignBadge(totalDiscount: Int): String {

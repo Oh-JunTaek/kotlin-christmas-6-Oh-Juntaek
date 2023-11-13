@@ -33,12 +33,12 @@ class DdayDiscount {
         discount += calculateWeekdayDiscount(date.dayOfMonth, dessertCount)
         discount += calculateWeekendDiscount(date.dayOfMonth, mainCount)
         discount += calculateSpecialDiscount(isSpecialDay)
-        discount += calculateGiftEvent(totalAmount)
+//        discount += calculateGiftEvent(totalAmount) 증정품 계산 빼기
         return discount
     }
 
-        fun calculateFinalAmount(totalAmount: Int, totalDiscount: Int): Int {
-            return totalAmount - totalDiscount
+    fun calculateFinalAmount(totalAmount: Int, totalDiscount: Int): Int {
+        return totalAmount - totalDiscount
         }
 
     fun calculateDdayDiscount(dayOfMonth: Int): Int {

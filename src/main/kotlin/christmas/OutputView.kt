@@ -65,7 +65,7 @@ class OutputView {
         println("-${formatter.format(totalDiscount.toLong())}원")
 
         println("\n<할인 후 예상 결제 금액>")
-        println("${formatter.format((order.totalAmount - totalDiscount).toLong())}원")
+        println("${formatter.format((order.totalAmount - totalDiscount + giftDiscount).toLong())}원")
 
 
         println("\n<12월 이벤트 배지>")
