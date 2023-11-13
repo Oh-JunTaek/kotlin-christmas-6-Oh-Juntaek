@@ -9,5 +9,8 @@ data class Order(
     val beverageCount: Int,
     val dessertCount: Int,
     val mainCount: Int,
-    val isSpecialDay: Boolean
+    val isSpecialDay: Boolean,
+    val items: List<OrderItem>
 )
+
+data class OrderItem(val menu: Menu, val quantity: Int)
