@@ -5,24 +5,35 @@ import christmas.Order.Companion.parseOrder
 import java.time.LocalDate
 
 class InputView {
+    companion object {
+        private const val VISIT_DATE_QUESTION = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)"
+        private const val INVALID_DATE_ERROR = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요."
+        private const val NON_NUMERIC_DATE_ERROR = "[ERROR] 날짜는 숫자만 입력해 주세요."
+        private const val ORDER_QUESTION = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)"
+        private const val INVALID_ORDER_ERROR = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."
+        private val DATE_RANGE = 1..31
+        private val YEAR = LocalDate.now().year //현재 년도를 가져옵니다.
+        private val MONTH = 12 //월은 사용자의 요구에 따라 변경할 수 있습니다.
+    }
+
     fun readDate(): LocalDate {
-        println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)")
+        println(VISIT_DATE_QUESTION)
         while (true) {
             try {
                 val day = Console.readLine()!!.toInt()
-                if (day !in 1..31) {
-                    println("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
+                if (day !in DATE_RANGE) {
+                    println(INVALID_DATE_ERROR)
                     continue
                 }
-                return LocalDate.of(2023, 12, day)
+                return LocalDate.of(YEAR, MONTH, day)
             } catch (e: Exception) {
-                println("[ERROR] 날짜는 숫자만 입력해 주세요.")
+                println(NON_NUMERIC_DATE_ERROR)
             }
         }
     }
 
     fun readOrder(date: LocalDate): Order {
-        println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)")
+        println(ORDER_QUESTION)
         while (true) {
             try {
                 val input = Console.readLine()!!
@@ -30,7 +41,10 @@ class InputView {
                 val orderItems = input.split(",")
                 val orderedMenus = mutableSetOf<String>()
                 for (item in orderItems) {
-                    val (menu, count) = item.split("-")
+                    val splitItem = item.split("-")
+                    validateInputFormat(splitItem)
+                    val menu = splitItem[0]
+                    val count = splitItem[1]
                     validateMenu(menu)
                     validateCount(count)
                     validateDuplicate(orderedMenus, menu)
@@ -38,26 +52,32 @@ class InputView {
                 val order = parseOrder(input, date)
                 return order
             } catch (e: IllegalArgumentException) {
-                println("${e.message} 다시 입력해 주세요.")
+                println(INVALID_ORDER_ERROR)
             }
+        }
+    }
+
+    fun validateInputFormat(splitItem: List<String>) {
+        if (splitItem.size != 2) {
+            throw IllegalArgumentException(INVALID_ORDER_ERROR)
         }
     }
 
     fun validateMenu(menu: String) {
         if (menu !in MenuList.ALL_MENUS.keys) {
-            throw IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+            throw IllegalArgumentException(INVALID_ORDER_ERROR)
         }
     }
 
     fun validateCount(count: String) {
         if (count.toIntOrNull() == null || count.toInt() < 1) {
-            throw IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+            throw IllegalArgumentException(INVALID_ORDER_ERROR)
         }
     }
 
     fun validateDuplicate(orderedMenus: MutableSet<String>, menu: String) {
         if (!orderedMenus.add(menu)) {
-            throw IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+            throw IllegalArgumentException(INVALID_ORDER_ERROR)
         }
     }
 }
