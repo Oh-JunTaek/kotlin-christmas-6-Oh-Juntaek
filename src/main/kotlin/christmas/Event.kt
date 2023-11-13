@@ -33,7 +33,7 @@ class Event {
             throw IllegalArgumentException("음료만 주문할 수 없습니다.")
         }
     }
-    //주문
+    //주문 예외상황설정
 
     private fun calculateTotalDiscount(order: Order): Int {
         //할인 계산식 추가 예정
