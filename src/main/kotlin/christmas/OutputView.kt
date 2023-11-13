@@ -23,6 +23,7 @@ class OutputView {
         println("${finalAmount}원")
 
         println("\n<12월 이벤트 배지>")
-        // 12월 이벤트 배지 출력 로직이 필요합니다.
+        val event = Event()
+        println(event.applyEvent(order))
     }
 }
