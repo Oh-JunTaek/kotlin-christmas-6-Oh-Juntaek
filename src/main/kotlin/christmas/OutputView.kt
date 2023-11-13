@@ -1,0 +1,4 @@
+package christmas
+
+class OutputView {
+}
