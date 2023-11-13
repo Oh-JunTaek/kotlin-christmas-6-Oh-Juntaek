@@ -1,11 +1,13 @@
 package christmas
 
-import camp.nextstep.edu.missionutils.Console
+
 fun main() {
     val inputView = InputView()
     val outputView = OutputView()
     val discount = DdayDiscount()
     val event = Event()
+    val order = inputView.readOrder()
+    order.printOrder()
 
     try {
         val date = inputView.readDate()
