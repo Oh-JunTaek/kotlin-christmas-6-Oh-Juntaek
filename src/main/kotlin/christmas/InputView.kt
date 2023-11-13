@@ -1,6 +1,8 @@
 package christmas
 
 import camp.nextstep.edu.missionutils.Console
+import java.time.LocalDate
+import java.util.Locale
 
 class InputView {
     fun readDate(): Int {
@@ -20,12 +22,20 @@ class InputView {
     private fun parseOrder(input: String): Order {
         val orderItems = input.split(",").map { it.trim() } // 각 메뉴와 개수를 구분합니다.
         val orders = orderItems.map { parseOrderItem(it) } // 각 메뉴와 개수를 OrderItem 객체로 변환합니다.
-        return Order(orders)
+        val totalAmount = orders.sumBy { it.menu.price * it.quantity }
+        val totalCount = orders.sumBy { it.quantity }
+        val beverageCount = orders.count { it.menu.category == MenuCategory.BEVERAGE }
+        val dessertCount = orders.count { it.menu.category == MenuCategory.DESSERT }
+        val mainCount = orders.count { it.menu.category == MenuCategory.MAIN }
+        val isSpecialDay = false
+
+        return Order(LocalDate.now(), totalAmount, totalCount, beverageCount, dessertCount, mainCount, isSpecialDay, orders)
     }
 
     private fun parseOrderItem(orderItem: String): OrderItem {
         val (menuName, quantityStr) = orderItem.split("-") // 메뉴 이름과 개수를 구분합니다.
-        val menu = MenuList.BEVERAGES[menuName.trim()] // 메뉴 리스트에서 해당 메뉴를 찾습니다.
+        val menu = MenuList.ALL_MENUS[menuName.trim()] // 메뉴 리스트에서 해당 메뉴를 찾습니다.
+            ?: throw IllegalArgumentException("메뉴 이름이 올바르지 않습니다.")
         val quantity = quantityStr.trim().toIntOrNull() ?: throw IllegalArgumentException("개수는 숫자만 입력해 주세요.")
         return OrderItem(menu, quantity)
     }
