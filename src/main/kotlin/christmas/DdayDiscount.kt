@@ -18,37 +18,33 @@ class DdayDiscount {
             val CHAMPAGNE_PRICE = MenuList.ALL_MENUS["샴페인"]?.price ?: 0
 //각종 상수 선언
 
-        fun calculateDiscount(
-            date: LocalDate,
-            totalAmount: Int,
-            isSpecialDay: Boolean,
-            dessertCount: Int,
-            mainCount: Int
-        ): Int {
-            validateDate(date)
-            var discount = START_DISCOUNT + (date.dayOfMonth - 1) * INCREASE_DISCOUNT
+    fun calculateDiscount(
+        date: LocalDate,
+        totalAmount: Int,
+        isSpecialDay: Boolean,
+        dessertCount: Int,
+        mainCount: Int
+    ): Int {
+        validateDate(date)
+        var discount = START_DISCOUNT + (date.dayOfMonth - 1) * INCREASE_DISCOUNT
 
-            // 평일 할인
-            if (!WEEKENDS.contains(date.dayOfMonth)) {
-                discount += dessertCount * WEEKDAY_DESSERT_DISCOUNT
-            }
-            // 주말 할인
-            else {
-                discount += mainCount * WEEKEND_MAIN_DISCOUNT
-            }
-
-            // 특별 할인
-            if (isSpecialDay) {
-                discount += SPECIAL_DISCOUNT
-            }
-
-            // 증정 이벤트
-            if (totalAmount >= GIFT_THRESHOLD) {
-                discount += CHAMPAGNE_PRICE
-            }
-
+        if (!WEEKENDS.contains(date.dayOfMonth)) {
+            discount += dessertCount * WEEKDAY_DESSERT_DISCOUNT
             return discount
         }
+
+        discount += mainCount * WEEKEND_MAIN_DISCOUNT
+
+        if (isSpecialDay) {
+            discount += SPECIAL_DISCOUNT
+        }
+
+        if (totalAmount >= GIFT_THRESHOLD) {
+            discount += CHAMPAGNE_PRICE
+        }
+
+        return discount
+    }
 
         fun calculateFinalAmount(totalAmount: Int, totalDiscount: Int): Int {
             return totalAmount - totalDiscount
