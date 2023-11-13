@@ -16,7 +16,7 @@ class Event {
     fun applyEvent(order: Order): String {
         validateOrder(order) // 주문 검증
         val totalDiscount = calculateTotalDiscount(order) // 총 할인 금액 계산
-        assignBadge(totalDiscount) // 할인 금액에 따른 배지 부여
+        return assignBadge(totalDiscount) // 할인 금액에 따른 배지 부여
     }//이벤트 적용 메인 함수
 
     private fun validateOrder(order: Order) {
