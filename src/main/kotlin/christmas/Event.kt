@@ -1,6 +1,7 @@
 package christmas
 
 import org.junit.jupiter.api.Order
+import java.time.LocalDate
 
 class Event {
     companion object {
@@ -38,5 +39,23 @@ class Event {
         //할인 계산식 추가 예정
         return 0
     }
-
+    private fun assignBadge(totalDiscount: Int): String {
+        var badge = ""
+        for ((key, value) in BADGE_THRESHOLDS) {
+            if (totalDiscount >= value) {
+                badge = key
+            }
+        }
+        return badge
+    }
 }
+
+data class Order(
+    val date: LocalDate,
+    val totalAmount: Int,
+    val totalCount: Int,
+    val beverageCount: Int,
+    val dessertCount: Int,
+    val mainCount: Int,
+    val isSpecialDay: Boolean
+)
