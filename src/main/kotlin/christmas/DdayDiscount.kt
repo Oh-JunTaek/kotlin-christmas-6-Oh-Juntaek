@@ -50,6 +50,29 @@ class DdayDiscount {
             return totalAmount - totalDiscount
         }
 
+    fun calculateDdayDiscount(date: LocalDate): Int {
+        validateDate(date)
+        return START_DISCOUNT + (date.dayOfMonth - 1) * INCREASE_DISCOUNT
+    }
+
+    fun calculateWeekdayDiscount(date: LocalDate, dessertCount: Int): Int {
+        validateDate(date)
+        return if (!WEEKENDS.contains(date.dayOfMonth)) dessertCount * WEEKDAY_DESSERT_DISCOUNT else 0
+    }
+
+    fun calculateWeekendDiscount(date: LocalDate, mainCount: Int): Int {
+        validateDate(date)
+        return if (WEEKENDS.contains(date.dayOfMonth)) mainCount * WEEKEND_MAIN_DISCOUNT else 0
+    }
+
+    fun calculateSpecialDiscount(isSpecialDay: Boolean): Int {
+        return if (isSpecialDay) SPECIAL_DISCOUNT else 0
+    }
+
+    fun calculateGiftEvent(totalAmount: Int): Int {
+        return if (totalAmount >= GIFT_THRESHOLD) CHAMPAGNE_PRICE else 0
+    }
+
         private fun validateDate(date: LocalDate) {
             if (date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
                 throw IllegalArgumentException("날짜는 ${START_DATE.year}년 ${START_DATE.monthValue}월 ${START_DATE.dayOfMonth}일부터 ${END_DATE.year}년 ${END_DATE.monthValue}월 ${END_DATE.dayOfMonth}일까지만 가능합니다.")
