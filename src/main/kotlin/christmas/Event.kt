@@ -1,6 +1,5 @@
 package christmas
 
-import org.junit.jupiter.api.Order
 import java.time.LocalDate
 
 class Event {
@@ -13,7 +12,6 @@ class Event {
             "산타" to 20000
         )
     }
-    // 상수 선언
 
     fun applyEvent(order: Order): String {
         validateOrder(order)
@@ -22,7 +20,6 @@ class Event {
         val finalAmount = ddayDiscount.calculateFinalAmount(order.totalAmount, totalDiscount)
         return assignBadge(totalDiscount)
     }
-
 
     private fun validateOrder(order: Order) {
         if (order.totalAmount < MIN_ORDER_AMOUNT) {
@@ -35,25 +32,9 @@ class Event {
             throw IllegalArgumentException("음료만 주문할 수 없습니다.")
         }
     }
-    //주문 예외상황설정
 
     private fun assignBadge(totalDiscount: Int): String {
         var badge = "없음"
-        for ((key, value) in BADGE_THRESHOLDS) {
-            if (totalDiscount >= value) {
-                badge = key
-            }
-        }
-        return badge
-    }
-}
-
-    private fun calculateTotalDiscount(order: Order): Int {
-        //할인 계산식 추가 예정
-        return 0
-    }
-    private fun assignBadge(totalDiscount: Int): String {
-        var badge = ""
         for ((key, value) in BADGE_THRESHOLDS) {
             if (totalDiscount >= value) {
                 badge = key
