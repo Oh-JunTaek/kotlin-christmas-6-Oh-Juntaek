@@ -55,7 +55,8 @@ class OutputView {
         }
 
         println("\n<총혜택 금액>")
-        println("-${formatter.format(discount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount))}원")
+        val totalDiscount = discount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
+        println(if (totalDiscount > 0) "-${formatter.format(totalDiscount)}원" else "${formatter.format(totalDiscount)}원")
 
         println("<할인 후 예상 결제 금액>")
         println("${formatter.format(finalAmount)}원")
