@@ -36,6 +36,13 @@ class OutputView {
         println("\n<할인 전 총주문 금액>")
         println("${formatter.format(order.totalAmount)}원")
 
+        println("\n<증정 메뉴>")
+        if (order.totalAmount >= 120000) {
+            println("샴페인 1개")
+        } else {
+            println("없음")
+        }
+
         println("\n<혜택 내역>")
         if (discountDetails.isEmpty()) {
             println("없음")
