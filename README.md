@@ -1,31 +1,33 @@
 # 12월 이벤트 플래너 개발
 
-## 개발 환경
-- 언어: Kotlin 1.9.0
-- 테스트: JUnit 5, AssertJ
+## 구현해야 할 목록
 
-## 프로그래밍 요구 사항
-1. Kotlin 코드로만 구현한다.
-2. 프로그램의 시작점은 Application의 main()이다.
-3. build.gradle(.kts)을 변경하지 않고 외부 라이브러리를 사용하지 않는다.
-4. Kotlin 코드 컨벤션 가이드를 준수한다.
-5. 프로그램 종료 시 System.exit()를 호출하지 않는다.
-6. 프로그램 구현이 완료되면 ApplicationTest의 모든 테스트가 성공해야 한다.
-7. indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
-8. 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
-9. 함수(또는 메서드)가 한 가지 일만 잘 하도록 구현한다.
-10. JUnit 5와 AssertJ를 이용하여 기능 목록이 정상 동작함을 테스트 코드로 확인한다.
-11. else를 지양한다.
-12. 도메인 로직에 단위 테스트를 구현한다. 단, UI(System.out, System.in, Scanner) 로직은 제외한다.
-13. 핵심 로직을 구현하는 코드와 UI를 담당하는 로직을 분리해 구현한다.
-14. 사용자가 잘못된 값을 입력할 경우 IllegalArgumentException를 발생시키고, "[ERROR]"로 시작하는 에러 메시지를 출력 후 그 부분부터 입력을 다시 받는다.
-15. Exception이 아닌 IllegalArgumentException, IllegalStateException 등과 같은 명확한 유형을 처리한다.
-16. 아래 있는 InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현한다.
-17. camp.nextstep.edu.missionutils에서 제공하는 Console API를 사용하여 구현한다.
 
-18. ## 12월 이벤트 계획
+## 12월 이벤트 계획
 - 크리스마스 디데이 할인
 - 평일 할인(일요일~목요일): 평일에는 디저트 메뉴를 메뉴 1개당 2,023원 할인
 - 주말 할인(금요일, 토요일): 주말에는 메인 메뉴를 메뉴 1개당 2,023원 할인
 - 특별 할인: 이벤트 달력에 별이 있으면 총주문 금액에서 1,000원 할인
 - 증정 이벤트: 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정
+
+## 체크리스트
+1. 라이브러리
+camp.nextstep.edu.missionutils에서 제공하는 Console API를 사용하여 구현해야 한다.
+사용자가 입력하는 값은 camp.nextstep.edu.missionutils.Console의 readLine()을 활용한다.
+2.InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현한다.
+입력과 출력을 담당하는 클래스를 별도로 구현한다.
+해당 클래스의 패키지, 클래스명, 메서드의 반환 타입과 시그니처는 자유롭게 구현할 수 있다.
+3.사용자가 잘못된 값을 입력할 경우 IllegalArgumentException를 발생시키고, "[ERROR]"로 시작하는 에러 메시지를 출력 후 그 부분부터 입력을 다시 받는다.
+Exception이 아닌 IllegalArgumentException, IllegalStateException 등과 같은 명확한 유형을 처리한다.
+4.도메인 로직에 단위 테스트를 구현해야 한다. 단, UI(System.out, System.in, Scanner) 로직은 제외한다.
+핵심 로직을 구현하는 코드와 UI를 담당하는 로직을 분리해 구현한다.
+5.else를 지양한다.
+힌트: if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.
+때로는 if/else, when문을 사용하는 것이 더 깔끔해 보일 수 있다. 어느 경우에 쓰는 것이 적절할지 스스로 고민해 본다.
+6.함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
+함수(또는 메서드)가 한 가지 일만 잘 하도록 구현한다.
+7.indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
+예를 들어 while문 안에 if문이 있으면 들여쓰기는 2이다.
+힌트: indent(인덴트, 들여쓰기) depth를 줄이는 좋은 방법은 함수(또는 메서드)를 분리하면 된다.
+8.프로그램 실행의 시작점은 Application의 main()이다.
+build.gradle(.kts)을 변경할 수 없고, 외부 라이브러리를 사용하지 않는다.
