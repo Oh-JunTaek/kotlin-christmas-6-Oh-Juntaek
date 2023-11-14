@@ -12,11 +12,11 @@ class Event {
     }
     fun applyEvent(order: Order): String {
         val totalDiscount = if (order.totalAmount >= MIN_ORDER_AMOUNT) {
-            calculateTotalDiscount(order) // 총 할인 금액 계산
+            calculateTotalDiscount(order)
         } else {
             0
         }
-        return assignBadge(totalDiscount) // 할인 금액에 따른 배지 부여
+        return assignBadge(totalDiscount)
     }
     private fun calculateTotalDiscount(order: Order): Int {
         val ddayDiscount = DdayDiscount()
