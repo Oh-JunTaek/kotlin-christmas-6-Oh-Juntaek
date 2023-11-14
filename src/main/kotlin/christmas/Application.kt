@@ -1,5 +1,9 @@
 package christmas
 
+import java.time.LocalDate
+import java.time.Month
+import java.time.Year
+
 fun main() {
     println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.")
     val inputView = InputView()
@@ -7,7 +11,10 @@ fun main() {
     val discount = DdayDiscount()
     val event = Event()
 
-    val date = inputView.readDate()
+    val day = inputView.readDate()
+    val year = Year.now().value // 현재 연도
+    val month = Month.DECEMBER.value // 12월
+    val date: LocalDate = LocalDate.of(year, month, day)
     val order = inputView.readOrder(date)
 
 

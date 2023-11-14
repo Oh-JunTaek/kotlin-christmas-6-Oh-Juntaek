@@ -12,6 +12,8 @@ data class Order(
     val isSpecialDay: Boolean,
     val items: List<OrderItem>
 ){
+    val dayOfMonth: Int
+        get() = date.dayOfMonth
     companion object {
         fun parseOrder(input: String, date: LocalDate): Order {
             val orderItems = input.split(",").map { it.trim() }

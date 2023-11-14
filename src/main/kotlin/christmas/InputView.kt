@@ -6,7 +6,6 @@ import java.time.LocalDate
 
 class InputView {
     companion object {
-        private const val VISIT_DATE_QUESTION = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)"
         private const val INVALID_DATE_ERROR = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요."
         private const val NON_NUMERIC_DATE_ERROR = "[ERROR] 날짜는 숫자만 입력해 주세요."
         private const val ORDER_QUESTION = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)"
@@ -15,25 +14,29 @@ class InputView {
         private const val BEVERAGEONLY = "[ERRROR] 음료만 주문할 수 없습니다. 다시 입력해주세요. "
         private val DATE_RANGE = 1..31
         private val YEAR = 2023
-        private val MONTH = 12 //월은 사용자의 요구에 따라 변경할 수 있습니다.
-    }//상수 선언
+        private val MONTH = 12
 
-    fun readDate(): LocalDate {
-        println(VISIT_DATE_QUESTION)
+    }//상수 선언
+    fun readDate(): Int {
         while (true) {
             try {
-                val day = Console.readLine()!!.toInt()
+                println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)")
+                val input = Console.readLine()
+                val day = input!!.toInt()
+
                 if (day !in DATE_RANGE) {
                     println(INVALID_DATE_ERROR)
                     continue
                 }
-                return LocalDate.of(YEAR, MONTH, day)
-            } catch (e: Exception) {
-                println(NON_NUMERIC_DATE_ERROR)
+
+                return day
+
+            } catch (e: IllegalArgumentException) {
+                println(INVALID_DATE_ERROR)
             }
         }
-    }//방문 날짜 입력 받기 및 예외 확인
-
+    }
+ //방문 날짜 입력 받기 및 예외 확인
     fun readOrder(date: LocalDate): Order {
         println(ORDER_QUESTION)
         while (true) {
@@ -59,6 +62,7 @@ class InputView {
             }
         }
     }//주문 정보 받기
+
 
     fun validateOrderItem(item: String, orderedMenus: MutableSet<String>): Pair<String, Int> {
         val splitItem = item.split("-")
