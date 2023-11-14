@@ -9,19 +9,13 @@ fun main() {
     val inputView = InputView()
     val outputView = OutputView()
     val discount = DdayDiscount()
-    val event = Event()
-
     val day = inputView.readDate()
     val year = Year.now().value // 현재 연도
     val month = Month.DECEMBER.value // 12월
     val date: LocalDate = LocalDate.of(year, month, day)
     val order = inputView.readOrder(date)
-
-
-    val badge = event.applyEvent(order)
     val totalDiscount = discount.calculateDiscount(order.date, order.totalAmount, order.isSpecialDay, order.dessertCount, order.mainCount)
     val finalAmount = order.totalAmount - totalDiscount
 
     outputView.printOrderSummary(order, discount, finalAmount)
-//    outputView.printBadge(badge)
 }

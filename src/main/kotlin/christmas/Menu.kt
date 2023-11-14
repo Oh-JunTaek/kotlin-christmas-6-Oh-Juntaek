@@ -1,7 +1,7 @@
 package christmas
 
 enum class MenuCategory {
-    APPETIZER, MAIN, DESSERT, BEVERAGE // 메뉴 카테고리를 나타내는 열거형
+    APPETIZER, MAIN, DESSERT, BEVERAGE
 }
 
 data class Menu(val name: String, val price: Int, val category: MenuCategory)

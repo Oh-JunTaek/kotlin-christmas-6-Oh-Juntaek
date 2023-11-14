@@ -57,12 +57,13 @@ data class Order(
         }
 
         private fun createOrder(date: LocalDate, orders: List<OrderItem>): Order {
-            val totalAmount = orders.sumBy { it.menu.price * it.quantity }
-            val totalCount = orders.sumBy { it.quantity }
-            val beverageCount = orders.count { it.menu.category == MenuCategory.BEVERAGE }
-            val dessertCount = orders.filter { it.menu.category == MenuCategory.DESSERT }.sumBy { it.quantity }
-            val mainCount = orders.filter { it.menu.category == MenuCategory.MAIN }.sumBy { it.quantity }
+            val totalAmount = calculateTotalAmount(orders)
+            val totalCount = calculateTotalCount(orders)
+            val beverageCount = calculateBeverageCount(orders)
+            val dessertCount = calculateDessertCount(orders)
+            val mainCount = calculateMainCount(orders)
             val isSpecialDay = false
+
             return Order(
                 date,
                 totalAmount,
@@ -74,15 +75,26 @@ data class Order(
                 orders
             )
         }
-    }
 
-    fun printOrder() {
-        println("12월 ${date.dayOfMonth}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n")
-        println("<주문 메뉴>")
-        items.forEach { item ->
-            println("${item.menu.name} ${item.quantity}개")
+        private fun calculateTotalAmount(orders: List<OrderItem>): Int {
+            return orders.sumOf { it.menu.price * it.quantity }
         }
-    }
+
+        private fun calculateTotalCount(orders: List<OrderItem>): Int {
+            return orders.sumOf { it.quantity }
+        }
+
+        private fun calculateBeverageCount(orders: List<OrderItem>): Int {
+            return orders.count { it.menu.category == MenuCategory.BEVERAGE }
+        }
+
+        private fun calculateDessertCount(orders: List<OrderItem>): Int {
+            return orders.filter { it.menu.category == MenuCategory.DESSERT }.sumOf { it.quantity }
+        }
+
+        private fun calculateMainCount(orders: List<OrderItem>): Int {
+            return orders.filter { it.menu.category == MenuCategory.MAIN }.sumOf { it.quantity }
+        }
 }
 
-data class OrderItem(val menu: Menu, val quantity: Int)
+data class OrderItem(val menu: Menu, val quantity: Int)}

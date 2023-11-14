@@ -7,14 +7,12 @@ import java.time.LocalDate
 class InputView {
     companion object {
         private const val INVALID_DATE_ERROR = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요."
-        private const val NON_NUMERIC_DATE_ERROR = "[ERROR] 날짜는 숫자만 입력해 주세요."
         private const val ORDER_QUESTION = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)"
         private const val INVALID_ORDER_ERROR = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."
         private const val MENUMAXIMAM = "[ERROR] 메뉴는 20개 까지만 주문 가능합니다. 다시 입력해주세요."
         private const val BEVERAGEONLY = "[ERRROR] 음료만 주문할 수 없습니다. 다시 입력해주세요. "
         private val DATE_RANGE = 1..31
-        private val YEAR = 2023
-        private val MONTH = 12
+
 
     }//상수 선언
     fun readDate(): Int {
@@ -28,9 +26,7 @@ class InputView {
                     println(INVALID_DATE_ERROR)
                     continue
                 }
-
                 return day
-
             } catch (e: IllegalArgumentException) {
                 println(INVALID_DATE_ERROR)
             }
