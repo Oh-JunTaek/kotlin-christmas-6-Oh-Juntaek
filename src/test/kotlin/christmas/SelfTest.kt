@@ -1,6 +1,5 @@
-import camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest
-import christmas.InputView
-import christmas.Order
+package christmas
+
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -10,14 +9,14 @@ class SelfTest {
     private val inputView = InputView()
 
     @Test
-    fun `validateBeverageOnly should throw exception when isBeverageOnly is true`() {
+    fun `음료만 주문하였을 때 예외를 던져야 한다`() {
         assertThrows<IllegalArgumentException> {
             inputView.validateBeverageOnly(true)
         }
     }
 
     @Test
-    fun `validateBeverageOnly should not throw exception when isBeverageOnly is false`() {
+    fun `음료만 주문하지 않았을 때 예외를 던지지 않아야 한다`() {
         assertDoesNotThrow {
             inputView.validateBeverageOnly(false)
         }
@@ -128,6 +127,38 @@ class SelfTest {
             val order = Order.parseOrder(input, date)
             assertEquals(order.items.size, 4)
             assertEquals(order.totalCount, 5)
+        }
+    }
+    @Test
+    fun `validateOrderItem에서 잘못된 메뉴 이름이 주어졌을 때 예외를 던져야 한다`() {
+        val orderedMenus = mutableSetOf<String>()
+        assertThrows<IllegalArgumentException> {
+            inputView.validateOrderItem("잘못된메뉴-1", orderedMenus)
+        }
+    }
+
+    @Test
+    fun `validateInputFormat에서 잘못된 형식이 주어졌을 때 예외를 던져야 한다`() {
+        val splitItem = listOf("티본스테이크")
+        assertThrows<IllegalArgumentException> {
+            inputView.validateInputFormat(splitItem)
+        }
+    }
+
+    @Test
+    fun `validateMenu에서 잘못된 메뉴 이름이 주어졌을 때 예외를 던져야 한다`() {
+        assertThrows<IllegalArgumentException> {
+            inputView.validateMenu("잘못된메뉴")
+        }
+    }
+
+    @Test
+    fun `validateCount에서 0 또는 음수가 주어졌을 때 예외를 던져야 한다`() {
+        assertThrows<IllegalArgumentException> {
+            inputView.validateCount(0)
+        }
+        assertThrows<IllegalArgumentException> {
+            inputView.validateCount(-1)
         }
     }
 }
