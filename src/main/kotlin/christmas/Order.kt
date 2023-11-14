@@ -11,9 +11,7 @@ data class Order(
     val mainCount: Int,
     val isSpecialDay: Boolean,
     val items: List<OrderItem>
-){
-    val dayOfMonth: Int
-        get() = date.dayOfMonth
+) {
     companion object {
         fun parseOrder(input: String, date: LocalDate): Order {
             val orderItems = input.split(",").map { it.trim() }
@@ -63,7 +61,6 @@ data class Order(
             val dessertCount = calculateDessertCount(orders)
             val mainCount = calculateMainCount(orders)
             val isSpecialDay = false
-
             return Order(
                 date,
                 totalAmount,
@@ -96,5 +93,4 @@ data class Order(
             return orders.filter { it.menu.category == MenuCategory.MAIN }.sumOf { it.quantity }
         }
 }
-
 data class OrderItem(val menu: Menu, val quantity: Int)}
